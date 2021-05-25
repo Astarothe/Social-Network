@@ -1,0 +1,10 @@
+.content {
+    grid-area: c;
+    background-color: cornflowerblue;
+}
+
+.content img {
+    width: 100%;
+    height: 400px;
+    object-fit: fill;
+}
