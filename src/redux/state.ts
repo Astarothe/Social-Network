@@ -24,6 +24,8 @@ export type RootStateType = {
     dialogsPage: DialogsPageType
 }
 
+const ADD_POST = "ADD-POST";
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 
 export let store = {
     _state: {
@@ -56,25 +58,41 @@ export let store = {
     _callSubscriber(state: any) {
         console.log();
     },
+
     getState() {
         return this._state;
     },
-    addPost() {
-        let newPost = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
-        };
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = "";
-        this._callSubscriber(this._state)
-
-    },
-    updateNewPostText(value: string) {
-        this._state.profilePage.newPostText = value;
-        this._callSubscriber(this._state);
-    },
     subscribe(observer: (state: RootStateType) => void) {
         this._callSubscriber = observer;
+    },
+
+    _addPost() {
+
+    },
+    _updateNewPostText(value: string) {
+
+    },
+    dispatch(action: any) {
+        if(action.type === "ADD-POST") {
+            let newPost = {
+                id: 5,
+                message: this._state.profilePage.newPostText,
+                likesCount: 0
+            };
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = "";
+            this._callSubscriber(this._state)
+
+        } else if(action.type === "UPDATE-NEW-POST-TEXT") {
+            this._state.profilePage.newPostText = action.newText;
+            this._callSubscriber(this._state);
+        }
     }
 }
+
+export const addPostActionCreator = () => ({type: ADD_POST})
+
+export const updateNewPostTextActionCreator = (text: string) =>
+    ({type: UPDATE_NEW_POST_TEXT, newText:text})
+
+
