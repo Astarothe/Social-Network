@@ -1,7 +1,7 @@
 import React, {ChangeEvent, ChangeEventHandler} from "react";
 import s from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
-import {PostsType, ProfilePageType, updateNewPostText} from "../../../redux/state";
+import {PostsType, ProfilePageType} from "../../../redux/state";
 
 type MyPostsPropsType = {
     newPostText:string
@@ -21,6 +21,7 @@ export function MyPosts(props: MyPostsPropsType) {
         }
     }
     const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        debugger
         props.updateNewPostText(e.currentTarget.value);
     }
     return (
