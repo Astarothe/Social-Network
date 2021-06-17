@@ -26,16 +26,11 @@ export type DialogsPageType = {
     newMessageBody: string
 }
 
-export type AddPostActionType = ReturnType<typeof addPostActionCreator>
-export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextActionCreator>
-export type UpdateNewMessageBodyActionType = ReturnType<typeof updateNewMessageBodyCreator>
-export type SendMessageActionType = ReturnType<typeof sendMessageCreator>
-
 export type ActionPropsType =
-    AddPostActionType
-    | UpdateNewPostTextActionType
-    | UpdateNewMessageBodyActionType
-    | SendMessageActionType
+    ReturnType<typeof addPostActionCreator>
+    | ReturnType<typeof updateNewPostTextActionCreator>
+    | ReturnType<typeof updateNewMessageBodyCreator>
+    | ReturnType<typeof sendMessageCreator>
 
 export type RootStateType = {
     profilePage: ProfilePageType
