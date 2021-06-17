@@ -1,3 +1,8 @@
+const ADD_POST = "ADD-POST";
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY";
+const SEND_MESSAGE = "SEND_MESSAGE";
+
 type DialogType = {
     id: number
     name: string
@@ -18,16 +23,34 @@ export type ProfilePageType = {
 export type DialogsPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
+    newMessageBody: string
 }
+
+export type AddPostActionType = ReturnType<typeof addPostActionCreator>
+export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextActionCreator>
+export type UpdateNewMessageBodyActionType = ReturnType<typeof updateNewMessageBodyCreator>
+export type SendMessageActionType = ReturnType<typeof sendMessageCreator>
+
+export type ActionPropsType =
+    AddPostActionType
+    | UpdateNewPostTextActionType
+    | UpdateNewMessageBodyActionType
+    | SendMessageActionType
+
 export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
 }
+export type StoreType = {
+    _state: RootStateType
+    _callSubscriber: (state: any) => void
+    getState: () => RootStateType
+    subscribe: (observer: (state: RootStateType) => void) => void
+    dispatch: (action: ActionPropsType) => void
+}
 
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 
-export let store = {
+export let store: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -53,6 +76,7 @@ export let store = {
                 {id: 5, message: "Yo"},
                 {id: 6, message: "Yo"},
             ],
+            newMessageBody: "",
         },
     },
     _callSubscriber(state: any) {
@@ -65,15 +89,8 @@ export let store = {
     subscribe(observer: (state: RootStateType) => void) {
         this._callSubscriber = observer;
     },
-
-    _addPost() {
-
-    },
-    _updateNewPostText(value: string) {
-
-    },
-    dispatch(action: any) {
-        if(action.type === "ADD-POST") {
+    dispatch(action: ActionPropsType) {
+        if (action.type === ADD_POST) {
             let newPost = {
                 id: 5,
                 message: this._state.profilePage.newPostText,
@@ -83,16 +100,31 @@ export let store = {
             this._state.profilePage.newPostText = "";
             this._callSubscriber(this._state)
 
-        } else if(action.type === "UPDATE-NEW-POST-TEXT") {
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.newText;
+            this._callSubscriber(this._state);
+        } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
+            this._state.dialogsPage.newMessageBody = action.body;
+            this._callSubscriber(this._state);
+        } else if (action.type === SEND_MESSAGE) {
+            let body = this._state.dialogsPage.newMessageBody;
+            this._state.dialogsPage.newMessageBody = "";
+            this._state.dialogsPage.messages.push({id: 7, message: body});
             this._callSubscriber(this._state);
         }
     }
 }
 
-export const addPostActionCreator = () => ({type: ADD_POST})
+export const addPostActionCreator = () => ({type: ADD_POST} as const)
 
-export const updateNewPostTextActionCreator = (text: string) =>
-    ({type: UPDATE_NEW_POST_TEXT, newText:text})
+export const updateNewPostTextActionCreator = (text: string) => {
+    return {
+        type: UPDATE_NEW_POST_TEXT,
+        newText: text
+    } as const
+}
 
+export const sendMessageCreator = () => ({type: SEND_MESSAGE} as const)
 
+export const updateNewMessageBodyCreator = (text: string) =>
+    ({type: UPDATE_NEW_MESSAGE_BODY, body: text} as const)
