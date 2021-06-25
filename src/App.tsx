@@ -8,12 +8,12 @@ import {Route} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {ActionPropsType, RootStateType, StoreType} from "./redux/state";
+import {ActionPropsType, RootStateType, StoreType} from "./redux/store";
 
 type AppType = {
     state: RootStateType
     dispatch: (action: ActionPropsType) => void
-    store: StoreType
+    store: any
 }
 
 export function App(props: AppType) {

@@ -1,6 +1,10 @@
-import {ActionPropsType, SidebarPageType} from "./state";
+import {ActionPropsType, SidebarPageType} from "./store";
 
-export const sidebarReducer = (state: SidebarPageType, action: ActionPropsType) => {
+let initialState = {
+    name:"Mishel"
+}
+
+export const sidebarReducer = (state: SidebarPageType = initialState, action: ActionPropsType) => {
 
     return state
 }

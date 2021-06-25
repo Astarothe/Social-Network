@@ -4,7 +4,10 @@ import ReactDOM from "react-dom";
 import React from "react";
 import {BrowserRouter} from "react-router-dom";
 import {App} from "./App";
-import {RootStateType, store} from "./redux/state";
+import {RootStateType} from "./redux/store";
+import {store} from "./redux/redux-store";
+
+console.log(store.getState())
 
 
 let rerenderEntireTree = (state: RootStateType) => {
@@ -18,7 +21,10 @@ let rerenderEntireTree = (state: RootStateType) => {
 
 rerenderEntireTree(store.getState());
 
-store.subscribe(rerenderEntireTree);
+store.subscribe(() => {
+    let state = store.getState()
+    rerenderEntireTree(state);
+});
 
 
 // If you want to start measuring performance in your app, pass a function
