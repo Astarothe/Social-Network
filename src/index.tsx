@@ -6,15 +6,15 @@ import {BrowserRouter} from "react-router-dom";
 import {App} from "./App";
 import {RootStateType} from "./redux/store";
 import {store} from "./redux/redux-store";
-
-console.log(store.getState())
-
+import {Provider, StoreContext } from './StoreContext';
 
 let rerenderEntireTree = (state: RootStateType) => {
     ReactDOM.render(
         <React.StrictMode>
             <BrowserRouter>
-                <App state={state} dispatch={store.dispatch.bind(store)} store={store}/>
+                <Provider value={store}>
+                <App />
+                </Provider>
             </BrowserRouter>
         </React.StrictMode>, document.getElementById('root'));
 }
