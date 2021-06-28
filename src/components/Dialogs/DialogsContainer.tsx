@@ -10,6 +10,7 @@ let mapStateToProps = (state: RootStateType) => {
     }
 }
 let mapDispatchToProps = (dispatch:any) => {
+    debugger
     return {
         updateNewMessageBody: (body:string) => {
             dispatch(updateNewMessageBodyCreator(body));

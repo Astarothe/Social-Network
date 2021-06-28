@@ -35,9 +35,10 @@ export function Dialogs(props: DialogsType) {
             <div className={s.messages}>
                 <div>{messageElements}</div>
                 <div>
-                    <div><textarea value={newMessageBody}
-                                   onChange={onNewMessageChange}
-                                   placeholder={"Enter your message"}></textarea></div>
+                    <div>
+                    <textarea value={newMessageBody}
+                              onChange={onNewMessageChange}
+                              placeholder={"Enter your message"}></textarea></div>
                     <div>
                         <button onClick={onSendMessageClick}>send</button>
                     </div>

@@ -11,6 +11,10 @@ let initialState = {
 }
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ActionPropsType) => {
+    let newState = {
+        ...state,
+        posts: state.posts.map(p => ({...p}))
+    }
     switch (action.type) {
         case ADD_POST:
             let newPost = {
@@ -18,14 +22,14 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
                 message: state.newPostText,
                 likesCount: 0
             };
-            state.posts.push(newPost)
-            state.newPostText = "";
+            newState.posts.push(newPost)
+            newState.newPostText = "";
             return state
         case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newText;
-            return state;
+            newState.newPostText = action.newText;
+            return newState;
         default:
-            return state;
+            return newState;
     }
 }
 
