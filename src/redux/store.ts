@@ -1,6 +1,7 @@
 import {addPostActionCreator, profileReducer, updateNewPostTextActionCreator} from "./profile-reducer";
 import {dialogsReducer, sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar";
+import {followAC, setUsersAC, unfollowAC} from "./users-reducer";
 
 
 type DialogType = {
@@ -34,6 +35,9 @@ export type ActionPropsType =
     | ReturnType<typeof updateNewPostTextActionCreator>
     | ReturnType<typeof updateNewMessageBodyCreator>
     | ReturnType<typeof sendMessageCreator>
+    | ReturnType<typeof followAC>
+    | ReturnType<typeof unfollowAC>
+    | ReturnType<typeof setUsersAC>
 
 export type RootStateType = {
     profilePage: ProfilePageType
@@ -78,7 +82,7 @@ export let store: StoreType = {
             newMessageBody: "",
         },
         sidebarPage: {
-            name:"Mishel"
+            name: "Mishel"
         }
     },
     _callSubscriber(state: any) {
