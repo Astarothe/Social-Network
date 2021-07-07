@@ -1,7 +1,6 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import s from "./Navbar.module.css";
-
 
 
 export function Navbar() {
@@ -13,6 +12,9 @@ export function Navbar() {
                 </li>
                 <li className={s.item}>
                     <NavLink to={"/dialogs"} activeClassName={s.active}>Messages</NavLink>
+                </li>
+                <li className={s.item}>
+                    <NavLink to={"/users"} activeClassName={s.active}>Users</NavLink>
                 </li>
                 <li className={s.item}>
                     <NavLink to={"/news"} activeClassName={s.active}>News</NavLink>

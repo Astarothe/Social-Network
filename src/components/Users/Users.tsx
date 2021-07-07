@@ -1,59 +1,66 @@
 import React from 'react';
 import s from './users.module.css';
-import {UsersPropsType} from "./UsersContainer";
+import axios from "axios";
+import userPhoto from "./../../assets/images/dummy.png"
+import {InitialStateType} from "../../redux/users-reducer";
 
-
-export const Users = (props: UsersPropsType) => {
-    if (props.usersPage.users.length === 0) {
-        props.setUsers([
-            {
-                id: 1,
-                photoUrl: "https://best-fly.ru/wp-content/uploads/2020/08/ikonka-malchik.jpg",
-                followed: false,
-                fullName: "Dmitry",
-                status: "I am a boss",
-                location: {city: "Minsk", country: "Belarus"}
-            },
-            {
-                id: 2,
-                photoUrl: "https://best-fly.ru/wp-content/uploads/2020/08/ikonka-malchik.jpg",
-                followed: true,
-                fullName: "Sasha",
-                status: "I am a boss too",
-                location: {city: "Moscow", country: "Russia"}
-            },
-            {
-                id: 3,
-                photoUrl: "https://best-fly.ru/wp-content/uploads/2020/08/ikonka-malchik.jpg",
-                followed: false,
-                fullName: "Andrew",
-                status: "I am a boss too",
-                location: {city: "Kiev", country: "Ukraine"}
-            }])
+export class Users extends React.Component<any, any> {
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items)
+                this.props.setTotalUsersCount(response.data.totalCount)
+            });
     }
 
-    return <div>
-        {
-            props.usersPage.users.map(u => <div key={u.id}>
+    onPageChanged = (pageNumber: number) => {
+        this.props.setCurrentPage(pageNumber);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items)
+            });
+    }
+
+    render() {
+
+        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
+
+        let pages = []
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i);
+        }
+
+        return <div>
+            <div>
+                {pages.map(p => <span className={this.props.currentPage === p ? s.selectedPage : ""}
+                                      onClick={() => this.onPageChanged(p)}>{p}</span>)}
+            </div>
+            {
+                this.props.users.map((u: any) => <div key={u.id}>
                 <span>
                     <div>
-                        <img src={u.photoUrl} className={s.userPhoto} alt=""/>
+                        <img src={u.photos.large != null ? u.photos.small : userPhoto} className={s.userPhoto} alt=""/>
                     </div>
                     {u.followed
-                        ? <button onClick={() => {props.unfollow(u.id)}}> Unfollow</button>
-                        : <button onClick={() => {props.follow(u.id)}}> Follow</button>}
+                        ? <button onClick={() => {
+                            this.props.unfollow(u.id)
+                        }}> Unfollow</button>
+                        : <button onClick={() => {
+                            this.props.follow(u.id)
+                        }}> Follow</button>}
                 </span>
-                <span>
                     <span>
-                        <div>{u.fullName}</div
+                    <span>
+                        <div>{u.name}</div
                         ><div>{u.status}</div>
                     </span>
                     <span>
-                        <div>{u.location.country}</div>
-                        <div>{u.location.city}</div>
+                        <div>{"u.location.country"}</div>
+                        <div>{"u.location.city"}</div>
                     </span>
                 </span>
-            </div>)
-        }
-    </div>
+                </div>)
+            }
+        </div>
+    }
 }

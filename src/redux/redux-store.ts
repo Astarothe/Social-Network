@@ -8,7 +8,7 @@ export const rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     sidebarPage: sidebarReducer,
-    users: usersReducer,
+    usersPage: usersReducer,
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>
