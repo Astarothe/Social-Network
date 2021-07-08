@@ -6,10 +6,6 @@ import {AppStateType} from "../../redux/redux-store";
 import {setUserProfile} from "../../redux/profile-reducer";
 import {withRouter} from "react-router-dom";
 
-type MapStateToPropsType = {
-    profile: any
-}
-
 
 class ProfileContainer extends React.Component<any, any> {
 
