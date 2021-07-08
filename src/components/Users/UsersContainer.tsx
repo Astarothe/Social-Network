@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {
     follow, InitialStateType, setCurrentPage, setUsers,
-    setTotalUsersCount, toggleIsFetching, unfollow, UserType
+    setTotalUsersCount, toggleIsFetching, unfollow, UserType, toggleFollowingProgress
 } from "../../redux/users-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Users} from "./Users";
@@ -53,7 +53,8 @@ export class UsersAPIContainer extends React.Component<any, any> {
                    users={this.props.users}
                    follow={this.props.follow}
                    unfollow={this.props.unfollow}
-
+                   toggleFollowingProgress={this.props.toggleFollowingProgress}
+                   followingInProgress={this.props.followingInProgress}
             />
         </>
     }
@@ -66,6 +67,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -73,5 +75,5 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 export const UsersContainer = connect(mapStateToProps,
     {
         follow, unfollow, setUsers,
-        setCurrentPage, setTotalUsersCount, toggleIsFetching
-    })(UsersAPIContainer);
+        setCurrentPage, setTotalUsersCount,
+        toggleIsFetching, toggleFollowingProgress})(UsersAPIContainer);
