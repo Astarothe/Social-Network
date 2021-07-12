@@ -1,3 +1,5 @@
+import {usersAPI} from "../api/api";
+
 type PostsType = {
     id: number
     message: string
@@ -43,6 +45,12 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
 
 export const addPostActionCreator = () => ({type: ADD_POST} as const)
 export const setUserProfile = (profile: any) => ({type: SET_USER_PROFILE, profile} as const)
+export const getUserProfile = (userId: number) => (dispatch: any) => {
+    usersAPI.getProfile(userId)
+        .then(response => {
+            dispatch(setUserProfile(response.data))
+        });
+}
 
 export const updateNewPostTextActionCreator = (text: string) => {
     return {
