@@ -1,7 +1,7 @@
 import {addPostActionCreator, profileReducer, updateNewPostTextActionCreator} from "./profile-reducer";
 import {dialogsReducer, sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar";
-import {follow, setUsers, unfollow} from "./users-reducer";
+import {followSuccess, setUsers, unfollowSuccess} from "./users-reducer";
 
 
 type DialogType = {
@@ -35,8 +35,8 @@ export type ActionPropsType =
     | ReturnType<typeof updateNewPostTextActionCreator>
     | ReturnType<typeof updateNewMessageBodyCreator>
     | ReturnType<typeof sendMessageCreator>
-    | ReturnType<typeof follow>
-    | ReturnType<typeof unfollow>
+    | ReturnType<typeof followSuccess>
+    | ReturnType<typeof unfollowSuccess>
     | ReturnType<typeof setUsers>
 
 export type RootStateType = {

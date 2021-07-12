@@ -9543,6 +9543,11 @@
     "indent-string" "^4.0.0"
     "strip-indent" "^3.0.0"
 
+"redux-thunk@^2.3.0":
+  "integrity" "sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw=="
+  "resolved" "https://registry.npmjs.org/redux-thunk/-/redux-thunk-2.3.0.tgz"
+  "version" "2.3.0"
+
 "redux-typescript@^1.2.1":
   "integrity" "sha1-w/hzORbia4LhXZ7ZzctL7ECjWqE="
   "resolved" "https://registry.npmjs.org/redux-typescript/-/redux-typescript-1.2.1.tgz"
