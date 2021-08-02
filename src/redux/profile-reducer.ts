@@ -9,7 +9,6 @@ type PostsType = {
 type InitialStateType = typeof initialState
 
 const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_STATUS = "SET_STATUS"
 
@@ -18,28 +17,26 @@ const initialState = {
         {id: 1, message: "Hi, how are you?", likesCount: 23},
         {id: 2, message: "It's my first post", likesCount: 0},
     ] as Array<PostsType>,
-    newPostText: "",
     profile: null,
     status: ""
 }
 type ActionPropsType =
     ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof setUserProfile>
-    | ReturnType<typeof updateNewPostTextActionCreator>
     | ReturnType<typeof setStatus>
 
 export const profileReducer = (state: InitialStateType = initialState, action: ActionPropsType): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
-            let newPost = {id: 5, message: state.newPostText, likesCount: 0};
+            let newPost = {
+                id: 5,
+                message: action.newPostText,
+                likesCount: 0
+            };
             return {
                 ...state,
                 posts: [...state.posts, newPost],
-                newPostText: ""
             }
-
-        case UPDATE_NEW_POST_TEXT:
-            return {...state, newPostText: action.newText}
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}
         case SET_STATUS:
@@ -49,7 +46,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
     }
 }
 
-export const addPostActionCreator = () => ({type: ADD_POST} as const)
+export const addPostActionCreator = (newPostText: string) => ({type: ADD_POST,newPostText} as const)
 export const setUserProfile = (profile: any) => ({type: SET_USER_PROFILE, profile} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
 
@@ -74,9 +71,4 @@ export const updateStatus = (status: string) => (dispatch: Dispatch) => {
         });
 }
 
-export const updateNewPostTextActionCreator = (text: string) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: text
-    } as const
-}
+

@@ -1,5 +1,5 @@
-import {addPostActionCreator, profileReducer, updateNewPostTextActionCreator} from "./profile-reducer";
-import {dialogsReducer, sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reducer";
+import {addPostActionCreator, profileReducer} from "./profile-reducer";
+import {dialogsReducer, sendMessageCreator} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar";
 import {followSuccess, setUsers, unfollowSuccess} from "./users-reducer";
 
@@ -32,8 +32,6 @@ export type DialogsPageType = {
 
 export type ActionPropsType =
     ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof updateNewPostTextActionCreator>
-    | ReturnType<typeof updateNewMessageBodyCreator>
     | ReturnType<typeof sendMessageCreator>
     | ReturnType<typeof followSuccess>
     | ReturnType<typeof unfollowSuccess>
@@ -53,7 +51,9 @@ export type StoreType = {
 }
 
 
-export let store: StoreType = {
+
+
+export let store = {
     _state: {
         profilePage: {
             posts: [
@@ -79,7 +79,6 @@ export let store: StoreType = {
                 {id: 5, message: "Yo"},
                 {id: 6, message: "Yo"},
             ],
-            newMessageBody: "",
         },
         sidebarPage: {
             name: "Mishel"
@@ -97,8 +96,8 @@ export let store: StoreType = {
     },
     dispatch(action: ActionPropsType) {
         // this._state.profilePage = profileReducer(this._state.profilePage, action)
-        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
-        this._state.sidebarPage = sidebarReducer(this._state.sidebarPage, action)
+        // this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        // this._state.sidebarPage = sidebarReducer(this._state.sidebarPage, action)
 
         this._callSubscriber(this._state)
     }

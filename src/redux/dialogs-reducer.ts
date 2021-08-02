@@ -1,6 +1,5 @@
 import {ActionPropsType} from "./store";
 
-const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY";
 const SEND_MESSAGE = "SEND_MESSAGE";
 
 type DialogType = {
@@ -30,22 +29,15 @@ let initialState = {
         {id: 5, message: "Yo"},
         {id: 6, message: "Yo"},
     ] as Array<MessageType>,
-    newMessageBody: "",
 }
 
 export const dialogsReducer = (state: InitialStateType = initialState, action: ActionPropsType): InitialStateType => {
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_BODY:
-            return {
-                ...state,
-                newMessageBody: action.body
-            }
         case SEND_MESSAGE:
-            let body = state.newMessageBody;
+            let body = action.newMessageBody;
             return {
                 ...state,
                 messages: [...state.messages, {id: 8, message: body}],
-                newMessageBody: "",
             }
         default:
             return state;
@@ -53,7 +45,5 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: A
 
 }
 
-export const sendMessageCreator = () => ({type: SEND_MESSAGE} as const)
+export const sendMessageCreator = (newMessageBody: string) => ({type: SEND_MESSAGE,newMessageBody} as const)
 
-export const updateNewMessageBodyCreator = (text: string) =>
-    ({type: UPDATE_NEW_MESSAGE_BODY, body: text} as const)
