@@ -4,6 +4,9 @@ import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {DialogsPageType} from "../../redux/store";
 import {Field, reduxForm} from "redux-form";
+import {Textarea} from "../common/FormsControls/FormsControls";
+import {maxLengthCreator, required} from "../../utils/validators/validators";
+import {AddMessageReduxForm} from "./AddMessageForm/AddMessageForm";
 
 
 type DialogsType = {
@@ -12,6 +15,8 @@ type DialogsType = {
     updateNewMessageBody: (body: string) => void
     SendMessage: (newMessageBody: string) => void
 }
+
+
 
 
 export function Dialogs(props: DialogsType) {
@@ -23,7 +28,7 @@ export function Dialogs(props: DialogsType) {
     const addNewMessage = (values: any) => {
         props.SendMessage(values.newMessageBody);
     }
-    console.log(props.isAuth)
+
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
@@ -36,18 +41,3 @@ export function Dialogs(props: DialogsType) {
         </div>
     )
 }
-
-const AddMessageForm = (props: any) => {
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field component={"textarea"} name={"newMessageBody"} placeholder={"Enter your message"}/>
-            </div>
-            <div>
-                <button>send</button>
-            </div>
-        </form>
-    )
-}
-
-const AddMessageReduxForm = reduxForm({form: "dialogAddMessageForm"})(AddMessageForm)
