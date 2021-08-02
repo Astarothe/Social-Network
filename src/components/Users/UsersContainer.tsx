@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ComponentType} from "react";
 import {connect} from "react-redux";
 import {
     InitialStateType,
@@ -26,7 +26,7 @@ type MapDispatchPropsType = {
     toggleIsFetching: (isFetching: boolean) => void
 }
 
-export class UsersContainer extends React.Component<any, any> {
+class UsersContainer extends React.Component<any, any> {
     componentDidMount() {
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
@@ -38,7 +38,8 @@ export class UsersContainer extends React.Component<any, any> {
     render() {
         return <>
             {this.props.isFetching && <Preloader/>}
-            <Users totalUsersCount={this.props.totalUsersCount}
+            <Users {...this.props}
+                   totalUsersCount={this.props.totalUsersCount}
                    pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}
                    onPageChanged={this.onPageChanged}
@@ -51,7 +52,7 @@ export class UsersContainer extends React.Component<any, any> {
     }
 }
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
@@ -62,7 +63,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 }
 
-export default compose(
-    withAuthRedirect,
+export default compose<ComponentType>(
     connect(mapStateToProps, {follow, unfollow, setCurrentPage, toggleFollowingProgress, getUsers}),
+    withAuthRedirect,
 )(UsersContainer)
