@@ -13,7 +13,7 @@ export type InitialStateType = {
 }
 
 type ActionPropsType =
-    ReturnType<typeof setAuthUserData>
+    ReturnType<typeof setAuthUserDataAC>
 
 
 const initialState: InitialStateType = {
@@ -37,28 +37,28 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
     }
 }
 
-export const setAuthUserData = (userId: any, email: any, login: any, isAuth: boolean) => ({
+export const setAuthUserDataAC = (userId: any, email: any, login: any, isAuth: boolean) => ({
     type: SET_USER_DATA,
     payload: {userId, email, login, isAuth}
 })
 
-export const getAuthUserData = () => {
+export const getAuthUserDataTC = () => {
     return (dispatch: Dispatch) => {
-        authAPI.me()
+       return authAPI.me()
             .then(response => {
                 if (response.data.resultCode === 0) {
                     let {id, login, email} = response.data.data
-                    dispatch(setAuthUserData(id, email, login, true))
+                    dispatch(setAuthUserDataAC(id, email, login, true))
                 }
             });
     }
 }
-export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: any) => {
+export const loginTC = (email: string, password: string, rememberMe: boolean) => (dispatch: any) => {
 
     authAPI.login(email, password, rememberMe)
         .then(response => {
             if (response.data.resultCode === 0) {
-                dispatch(getAuthUserData())
+                dispatch(getAuthUserDataTC())
             } else {
                 console.log(response.data.messages[0])
                 let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error";
@@ -66,11 +66,11 @@ export const login = (email: string, password: string, rememberMe: boolean) => (
             }
         });
 }
-export const logout = () => (dispatch: Dispatch) => {
+export const logoutTC = () => (dispatch: Dispatch) => {
     authAPI.logout()
         .then(response => {
             if (response.data.resultCode === 0) {
-                dispatch(setAuthUserData(null, null, null, false))
+                dispatch(setAuthUserDataAC(null, null, null, false))
 
             }
         });

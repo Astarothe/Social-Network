@@ -3,7 +3,7 @@ import {reduxForm, Field} from "redux-form";
 import {Input} from "../common/FormsControls/FormsControls";
 import {required} from "../../utils/validators/validators";
 import {connect} from "react-redux";
-import {login} from "../../redux/auth-reducer";
+import {loginTC} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import s from "./../common/FormsControls/FormsControls.module.css"
 
@@ -55,4 +55,4 @@ const LoginReduxForm = reduxForm({form: "login"})(LoginForm)
 const mapStateToProps = (state: any) => ({
     isAuth: state.auth.isAuth
 })
-export default connect(mapStateToProps, {login})(Login)
+export default connect(mapStateToProps, {login: loginTC})(Login)

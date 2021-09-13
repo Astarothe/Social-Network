@@ -1,5 +1,5 @@
-import {addPostActionCreator, profileReducer} from "./profile-reducer";
-import {dialogsReducer, sendMessageCreator} from "./dialogs-reducer";
+import {addPostAC, profileReducer} from "./profile-reducer";
+import {dialogsReducer, sendMessageAC} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar";
 import {followSuccess, setUsers, unfollowSuccess} from "./users-reducer";
 
@@ -31,8 +31,8 @@ export type DialogsPageType = {
 }
 
 export type ActionPropsType =
-    ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof sendMessageCreator>
+    ReturnType<typeof addPostAC>
+    | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof followSuccess>
     | ReturnType<typeof unfollowSuccess>
     | ReturnType<typeof setUsers>
