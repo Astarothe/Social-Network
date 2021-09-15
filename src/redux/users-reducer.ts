@@ -110,11 +110,12 @@ export const toggleFollowingProgress = (isFetching: boolean, userId: number) => 
     userId
 })
 
-export const getUsers = (currentPage: number, pageSize: number) => {
+export const requestUsersTC = (page: number, pageSize: number) => {
     return (dispatch: Dispatch) => {
         dispatch(toggleIsFetching(true));
+        dispatch(setCurrentPage(page))
 
-        usersAPI.getUsers(currentPage, pageSize).then(data => {
+        usersAPI.getUsers(page, pageSize).then(data => {
             dispatch(toggleIsFetching(false));
             dispatch(setUsers(data.items))
             dispatch(setTotalUsersCount(data.totalCount))
@@ -122,7 +123,7 @@ export const getUsers = (currentPage: number, pageSize: number) => {
     }
 }
 
-export const follow = (userId: number) => {
+export const followTC = (userId: number) => {
     return (dispatch: Dispatch) => {
         dispatch(toggleFollowingProgress(true, userId))
 
@@ -136,7 +137,7 @@ export const follow = (userId: number) => {
     }
 }
 
-export const unfollow = (userId: number) => {
+export const unfollowTC = (userId: number) => {
     return (dispatch: Dispatch) => {
         dispatch(toggleFollowingProgress(true, userId))
 
